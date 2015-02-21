@@ -8,16 +8,12 @@
                 "audio": "ant.mp3",
                 "sections": [
                     {
-                        "section": "a",
-                        "audio": "a.mp3"
-                    },
-                    {
-                        "section": "n",
-                        "audio": "n.mp3"
+                        "section": "an",
+                        "audio": "an.m4a"
                     },
                     {
                         "section": "t",
-                        "audio": "t.mp3"
+                        "audio": "te.m4a"
                     }
                 ]
             }, 
@@ -45,11 +41,11 @@
                 "sections": [
                     {
                         "section": "a",
-                        "audio": "a.mp3"
+                        "audio": "ah.m4a"
                     },
                     {
                         "section": "t",
-                        "audio": "t.mp3"
+                        "audio": "te.m4a"
                     }
                 ]
             }

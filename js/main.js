@@ -82,7 +82,7 @@ Notes:
 
 					$.each(word.sections, function(k, blend) {
 
-						itemString += '<div class="word-section" data-section="' + (k + 1) + '">';
+						itemString += '<div class="word-section" data-audio="' + blend.audio + '" data-section="' + (k + 1) + '">';
 						// itemString += '<span class="word-section-letter">';
 						itemString += blend.section;
 						// itemString += '</span>';
@@ -168,7 +168,7 @@ Notes:
 				$target.css('color', 'rgba(255,255,255,1)');
 
 				//
-				that.ui.player.attr('src', 'mp3/' + $target.text() + '.mp3');
+				that.ui.player.attr('src', 'mp3/' + $target.data('audio'));
 				that.ui.player[0].play();
 
 				// Finished?
@@ -179,7 +179,7 @@ Notes:
 
 						console.info('done!');
 
-						that.ui.player.attr('src', 'mp3/' + $parent.attr('data-audio'));
+						that.ui.player.attr('src', 'mp3/' + $parent.data('audio'));
 						that.ui.player[0].play();
 
 					}, 1500);
