@@ -1,0 +1,180 @@
+/* There will be 26 columns and 4 cells in each */
+
+$columns: 26;
+$cells: 4;
+$colours: #A64456 #55436D #618C6C #045284 #BF3C30 #BF9B30 #3E7E8C #D39024 #D8BD22 #C44111;
+
+@mixin transition() {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+* {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+#audio-player {
+    display: none;
+}
+
+.columns {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    @include transition();
+}
+
+.column {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    @include transition();
+}
+
+/* Column positioning */
+
+@for $i from 2 through $columns {
+
+    .column:nth-child(#{$i}) {
+        left: ($i - 1) * 100%;
+    }
+
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+/* Cell Colours */
+
+@for $i from 1 through $columns {
+
+    @for $j from 1 through $cells {
+
+        [data-column="#{$i}"] .cell:nth-child(#{$j}) {
+            background-color: nth($colours, random(length($colours)));
+        }
+
+    }
+
+}
+
+.cell h1 {
+    font-family: 'Muli', cursive;
+    font-weight: 400;
+    font-size: 30rem;
+    margin: 0;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner,
+.word {
+    max-width: 80%;
+    margin: 0 auto;
+    height: 100%;
+    display: table;
+    font-family: 'Muli', cursive;
+}
+
+.word-section {
+    width: auto;
+    margin: 0;
+    padding: 0 2%;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 16rem;
+    color: rgba(255,255,255,0.5);
+
+    @include transition();
+}
+
+.menu-container {
+    position: fixed;
+    bottom: -100px;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+
+    @include transition();
+}
+
+.menu-toggle {
+    width: 44px;
+    height: 44px;
+    display: block;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 11px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-top: none;
+    transform: rotate(180deg);
+
+    img {
+        width: 60%;
+        @include transition();
+    }
+}
+
+.menu {
+    // Each should be 10% of width width
+    width: 300%;
+    height: 100px;
+    background-color: rgba(0,0,0,0.2);
+    overflow: hidden;
+
+    border-top: 1px solid rgba(255,255,255,0.3);
+
+    @include transition();
+}
+
+.menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    list-style: none;
+    display: table;
+    float: left;
+    
+    // Remove the border from every 10th link
+    &:nth-child(10n) a {
+        border-right: none;
+    }
+}
+
+.menu a {
+    text-align: center;
+    display: table-cell;
+    font-family: 'Muli', cursive;
+    font-size: 3rem;
+    color: white;
+    text-decoration: none;
+    height: 100px;
+    vertical-align: middle;
+    border-right: 1px solid rgba(255,255,255,0.3);
+}
