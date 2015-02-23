@@ -82,7 +82,7 @@ body {
 .cell h1 {
     font-family: 'Muli', cursive;
     font-weight: 400;
-    font-size: 30rem;
+    font-size: 10rem; //30rem;
     margin: 0;
     display: table-cell;
     vertical-align: middle;
@@ -141,8 +141,8 @@ body {
 
 .menu {
     // Each should be 10% of width width
-    width: 300%;
-    height: 100px;
+    width: 400%;
+    height: 44px; // 100px;
     background-color: rgba(0,0,0,0.2);
     overflow: hidden;
 
@@ -154,15 +154,18 @@ body {
 .menu ul {
     margin: 0;
     padding: 0;
+    width: 25%;
+    display: inline-block;
 }
 
 .menu li {
     list-style: none;
     display: table;
     float: left;
+    width: percentage(1/8);
     
     // Remove the border from every 10th link
-    &:nth-child(10n) a {
+    &:nth-child(8n) a {
         border-right: none;
     }
 }
@@ -171,10 +174,10 @@ body {
     text-align: center;
     display: table-cell;
     font-family: 'Muli', cursive;
-    font-size: 3rem;
+    font-size: 1.1rem; // 3rem;
     color: white;
     text-decoration: none;
-    height: 100px;
+    height: 44px; // 100px;
     vertical-align: middle;
     border-right: 1px solid rgba(255,255,255,0.3);
 }

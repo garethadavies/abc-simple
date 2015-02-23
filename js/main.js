@@ -109,17 +109,35 @@ Notes:
 
 			var
 			that = this,
-			targetWidth = this.windowWidth / 10;
+			targetWidth = this.windowWidth / 8,
+			menuString = '';
 
 			$.each(data, function(i, value) {
 
-				that.ui.menuUl.append('<li><a href="#" data-column="' + i + '">' + value.uppercase + '' + value.lowercase + '</a></li>');
+				var index = +i;
+
+				if (index === 1 || index === 9 || index === 17 || index === 25) {
+
+					menuString += '<ul>';
+
+				}
+
+				menuString += '<li><a href="#" data-column="' + i + '">' + value.uppercase + '' + value.lowercase + '</a></li>';
+
+				if (index === 8 || index === 16 || index === 24 || index === 26) {
+
+					menuString += '</ul>';
+
+				}
 
 			});
 
+			that.ui.menu.append(menuString);
+
 			// Sort widths out
-			$('.menu li').css('width', targetWidth);
-			$('.menu li:nth-child(10n), .menu li:nth-child(11n), .menu li:first-child').css('width', targetWidth + 2);
+			// $('.menu li').css('width', targetWidth);
+			//$('.menu li:nth-child(8n), .menu li:nth-child(9n), .menu li:first-child').css('width', targetWidth + 2);
+			// $('.menu li:nth-child(8n)').css('width', targetWidth + 1);
 
 			this.initMenuSwipe();
 
@@ -380,7 +398,7 @@ Notes:
 
 		openMenu: function() {
 
-			this.ui.menuContainer.css('transform', 'translateY(-100px)');
+			this.ui.menuContainer.css('transform', 'translateY(-44px)');
 
 			this.ui.menuContainer.addClass('menu-container--open');
 
