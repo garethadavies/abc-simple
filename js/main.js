@@ -25,8 +25,11 @@ Notes:
 		verticalLimit: 4,
 		horizontalLimit: 26,
 		currentColumn: 1,
+		requestedColumn: undefined,
 		windowWidth: $(window).width(),
 		menuXPos: 0,
+		menuHeight: 44,
+		transitionLength: 300,
 		
 		ui: {
 			columnsContainer: $('#js-columns'),
@@ -44,6 +47,8 @@ Notes:
 			this.loadJSON();
 			this.initToggleSwipe();
 
+			this.playLetter();
+
 		},
 
 		loadJSON: function() {
@@ -52,23 +57,25 @@ Notes:
 
 			$.getJSON('json/abc.json', function(data) {
 
-				that.initContent(data);
+				that.data = data;
 
-				that.initMenu(data);
+				that.initContent();
+
+				that.initMenu();
 
 			});
 
 		},
 
-		initContent: function(data) {
+		initContent: function() {
 
 			var that = this;
 
-			$.each(data, function(i, letter) {
+			$.each(this.data , function(i, letter) {
 
 				var itemString = '';
 
-				itemString += '<div class="column" data-column="' + i + '">';
+				itemString += '<div class="column" data-column="' + i + '" data-audio="' + letter.audio + '">';
 				itemString += '<div class="cell" data-cell="1">';
 				itemString += '<div class="inner">';
 				itemString += '<h1><span>' + letter.uppercase + '</span><span>' + letter.lowercase + '</span></h1>';
@@ -105,14 +112,14 @@ Notes:
 
 		},
 
-		initMenu: function(data) {
+		initMenu: function() {
 
 			var
 			that = this,
-			targetWidth = this.windowWidth / 8,
-			menuString = '';
+			menuString = '',
+			$menuButtons;
 
-			$.each(data, function(i, value) {
+			$.each(this.data, function(i, value) {
 
 				var index = +i;
 
@@ -134,14 +141,29 @@ Notes:
 
 			that.ui.menu.append(menuString);
 
-			// Sort widths out
-			// $('.menu li').css('width', targetWidth);
-			//$('.menu li:nth-child(8n), .menu li:nth-child(9n), .menu li:first-child').css('width', targetWidth + 2);
-			// $('.menu li:nth-child(8n)').css('width', targetWidth + 1);
+			this.adjustMenu();
 
 			this.initMenuSwipe();
 
 			this.eventListeners();
+
+		},
+
+		adjustMenu: function() {
+
+			var
+			targetWidth = this.windowWidth / 8,
+			$menuButtons = this.ui.menu.find('a');
+
+			this.ui.menu.find('li').css('width', targetWidth);
+
+			this.menuHeight = $menuButtons.first().outerWidth();
+
+			$menuButtons.css('height', this.menuHeight);
+
+			this.ui.menu.css('height', this.menuHeight);
+
+			this.ui.menuContainer.css('bottom', -this.menuHeight);
 
 		},
 
@@ -216,14 +238,16 @@ Notes:
 				e.preventDefault();
 
 			});
-
-			$(window).resize(function() {
+			
+			$(window).resize($.throttle(500, function() {
 
 				that.windowWidth = $(window).width();
 
-				that.initMenu();
+				that.adjustMenu();
 
-			});
+				that.closeMenu();
+
+			}));
 
 		},
 
@@ -256,6 +280,8 @@ Notes:
 					this.parent().siblings('.column').removeAttr('style');
 
 					that.ui.columnsContainer.css('transform', 'translateX(-' + colIndex * 100 + '%)');
+
+					that.playLetter();
 		        
 		        },
 
@@ -296,12 +322,29 @@ Notes:
 					this.parent().siblings('.column').removeAttr('style');
 
 					that.ui.columnsContainer.css('transform', 'translateX(-' + (colIndex - 2) * 100 + '%)');
+
+					that.playLetter();
 		        
 		        },
 		        
 				threshold: 100
 
 			});
+
+		},
+
+		playLetter: function() {
+
+			var that = this;
+
+			setTimeout(function() {
+
+				console.info($('[data-column="' + that.currentColumn + '"]', that.ui.columnsContainer).data('audio'));
+
+				that.ui.player.attr('src', 'mp3/' + $('[data-column="' + that.currentColumn + '"]', that.ui.columnsContainer).data('audio'));
+				that.ui.player[0].play();
+
+			}, this.transitionLength * 2);
 
 		},
 
@@ -398,7 +441,7 @@ Notes:
 
 		openMenu: function() {
 
-			this.ui.menuContainer.css('transform', 'translateY(-44px)');
+			this.ui.menuContainer.css('transform', 'translateY(-' + this.menuHeight + 'px)');
 
 			this.ui.menuContainer.addClass('menu-container--open');
 

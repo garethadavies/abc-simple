@@ -2,6 +2,7 @@
     "1": {
         "uppercase": "A",
         "lowercase": "a",
+        "audio": "a.mp3",
         "words": [
             {
                 "word": "ant",
@@ -54,6 +55,7 @@
     "2": {
         "uppercase": "B",
         "lowercase": "b",
+        "audio": "b.mp3",
         "words": [
             {
                 "word": "ant",
@@ -110,6 +112,7 @@
     "3": {
         "uppercase": "C",
         "lowercase": "c",
+        "audio": "c.mp3",
         "words": [
             {
                 "word": "ant",
