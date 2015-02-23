@@ -471,6 +471,8 @@ Notes:
 				this.closeMenu();
 
 			}
+
+			this.playLetter();
 			
 		}
 
